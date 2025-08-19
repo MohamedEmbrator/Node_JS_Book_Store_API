@@ -12,8 +12,9 @@ const { Author, validateCreateAuthor, validateUpdateAuthor } = require("../model
 
 router.get("/", asyncHanlder(
   async (req, res) => {
-  // const authorsList = await Author.find().sort({firstName: 1}).select("firstName lastName -_id");
-    const authorsList = await Author.find();
+    const  pageNumber  = req.query.pageNumber;
+    // const authorsList = await Author.find().sort({firstName: 1}).select("firstName lastName -_id");
+    const authorsList = await Author.find().skip((pageNumber - 1) * 2).limit(2);
     res.status(200).json(authorsList);
 }
 ));

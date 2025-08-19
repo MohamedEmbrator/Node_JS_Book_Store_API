@@ -12,6 +12,15 @@ const { validateCreateBook, validateUpdateBook, Book } = require("../models/Book
 */
 
 router.get("/", asyncHanlder(async (req, res) => {
+  console.log(req.query);
+  // Comparison Query Operators
+  // Book.find({price: {$lt: 10}})
+  // $eq   (equal)
+  // $ne   (not equal)
+  // $lt   (Less Than)
+  // $lte  (Less Than and Equal)
+  // $gt   (greater than)
+  // $gte   (greater than and Equal)
   const books = await Book.find().populate("author", ["id", "firstName", "lastName"]);
   res.status(200).json(books);
 }));
