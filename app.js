@@ -4,11 +4,18 @@ const authorsPath = require("./routes/authors");
 const authPath = require("./routes/auth");
 const usersPath = require("./routes/users");
 const { notFound, errorHandler } = require("./middlewares/errors");
-const path = require('path');
 require("dotenv").config();
 const { connectToDB } = require("./config/db");
+const path = require('path');
+const helmet = require("helmet");
+const cors = require('cors');
 connectToDB();
 const app = express();
+
+app.use(helmet());
+// app.use(cors({ origin: "http://localhost:3000" }));
+// app.use(cors({origin: "*"}));
+app.use(cors());
 app.set("view engine", "ejs");
 
 app.use(express.static(path.join(__dirname, "images")));
