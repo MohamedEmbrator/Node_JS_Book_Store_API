@@ -4,11 +4,15 @@ const authorsPath = require("./routes/authors");
 const authPath = require("./routes/auth");
 const usersPath = require("./routes/users");
 const { notFound, errorHandler } = require("./middlewares/errors");
+const path = require('path');
 require("dotenv").config();
 const { connectToDB } = require("./config/db");
 connectToDB();
 const app = express();
 app.set("view engine", "ejs");
+
+app.use(express.static(path.join(__dirname, "images")));
+
 // Apply Middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -22,6 +26,7 @@ app.use("/api/books", booksPath);
 app.use("/api/authors", authorsPath);
 app.use("/api/auth", authPath);
 app.use("/api/users", usersPath);
+app.use("/api/upload", require("./routes/upload"));
 app.use("/password", require("./routes/password"));
 app.use(notFound)
 app.use(errorHandler)
