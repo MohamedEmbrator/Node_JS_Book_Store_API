@@ -6,12 +6,12 @@ const usersPath = require("./routes/users");
 const { notFound, errorHandler } = require("./middlewares/errors");
 require("dotenv").config();
 const { connectToDB } = require("./config/db");
-
 connectToDB();
-
 const app = express();
+app.set("view engine", "ejs");
 // Apply Middlewares
 app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 const port = 3001;
 
 app.get("/", (req, res) => {
@@ -22,6 +22,7 @@ app.use("/api/books", booksPath);
 app.use("/api/authors", authorsPath);
 app.use("/api/auth", authPath);
 app.use("/api/users", usersPath);
+app.use("/password", require("./routes/password"));
 app.use(notFound)
 app.use(errorHandler)
 app.listen(port, () => {
